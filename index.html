@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Hestia - Build Your Intelligence Core</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-card: #1a1a1a;
+            --accent-primary: #ff0080; /* Updated from green to magenta */
+            --accent-secondary: #ff8c00; /* New Orange/Gold accent */
+            --accent-tertiary: #0080ff;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --border: #333333;
+            --glow: 0 0 20px rgba(255, 0, 128, 0.4); /* Updated glow color */
+            --glow-secondary: 0 0 20px rgba(255, 140, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Prevent navbar from covering content when navigating */
+        section[id] {
+            scroll-margin-top: 100px;
+        }
+        
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 10px rgba(255, 0, 128, 0.5));
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            z-index: 1001;
+            padding: 8px;
+            position: relative;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .mobile-menu span {
+            width: 28px;
+            height: 3px;
+            background: var(--text-primary);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        /* Hamburger animation to X */
+        .mobile-menu.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+            background: var(--accent-primary);
+        }
+
+        .mobile-menu.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+
+        .mobile-menu.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+            background: var(--accent-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            height: auto;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: clamp(280px, 35vh, 500px);
+            padding-bottom: 4rem;
+            overflow: visible;
+            background: radial-gradient(ellipse at center, rgba(255, 0, 128, 0.1) 0%, transparent 70%);
+        }
+
+        /* Ensure content never overlaps navbar - invisible safety zone */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: max(100px, clamp(3rem, 10vh, 8rem));
+            min-height: 200px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 0, 128, 0.1);
+            border: 1px solid rgba(255, 0, 128, 0.3);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--accent-primary);
+            margin-top: max(120px, clamp(4rem, 12vh, 10rem));
+            margin-bottom: 2rem;
+            animation: pulse-glow 2s infinite;
+            font-family: 'JetBrains Mono', monospace;
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 0, 128, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(255, 0, 128, 0.5); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+            max-width: 100%;
+            overflow-wrap: break-word;
+        }
+
+        .hero .gradient-text {
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(-20deg); }
+        }
+
+        .hero .sub-headline {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+
+        .cta-primary {
+            padding: 1.2rem 2.5rem;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--bg-primary);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--glow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-primary:hover::before {
+            left: 100%;
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(255, 0, 128, 0.4);
+        }
+
+        .cta-secondary {
+            padding: 1.2rem 2.5rem;
+            background: transparent;
+            color: var(--text-primary);
+            text-decoration: none;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-secondary:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        /* Video Section */
+        .video-section {
+            padding: 6rem 0;
+            background: var(--bg-primary);
+            margin-top: 200px;
+        }
+
+        .video-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(255, 0, 128, 0.2),
+                        0 10px 30px rgba(255, 140, 0, 0.1);
+            position: relative;
+            border: 1px solid rgba(255, 0, 128, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .video-container:hover {
+            box-shadow: 0 40px 100px rgba(255, 0, 128, 0.3),
+                        0 15px 40px rgba(255, 140, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: var(--bg-secondary);
+        }
+
+        /* Problem Section */
+        .problem-section {
+            padding: 8rem 0;
+            background: var(--bg-secondary);
+            position: relative;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 4rem;
+            line-height: 1.2;
+        }
+
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .problem-card {
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .problem-card:hover::before {
+            opacity: 1;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 0, 128, 0.3);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), var(--glow);
+        }
+
+        .problem-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .problem-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* Solution Section */
+        .solution-section {
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        .solution-visual {
+            text-align: center;
+            margin: 4rem 0;
+            position: relative;
+        }
+
+        .solution-logo {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse-rotate 8s infinite ease-in-out;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .solution-logo::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            opacity: 0.2;
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .solution-logo img {
+            width: 160px;
+            height: auto;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 0 20px rgba(255, 0, 128, 0.4));
+        }
+
+        @keyframes pulse-rotate {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.05) rotate(5deg); }
+        }
+
+        .outcomes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .outcome {
+            text-align: center;
+            padding: 2rem;
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .outcome:hover {
+            border-color: var(--accent-primary);
+            box-shadow: var(--glow);
+            transform: translateY(-5px);
+        }
+
+        /* Solutions Grid */
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .solution-card {
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-primary), transparent);
+            opacity: 0.1;
+            transition: width 0.4s ease;
+        }
+
+        .solution-card:hover::after {
+            width: 4px;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 0, 128, 0.4);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .solution-card h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .solution-for {
+            color: var(--accent-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Case Studies */
+        .case-study {
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            margin-bottom: 3rem;
+            transition: all 0.3s ease;
+        }
+
+        .case-study:hover {
+            border-color: var(--accent-primary);
+            box-shadow: var(--glow);
+        }
+
+        .case-study h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--accent-primary);
+        }
+
+        .case-detail {
+            margin: 1.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .case-detail strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .results {
+            background: rgba(255, 0, 128, 0.1);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            border-left: 4px solid var(--accent-primary);
+        }
+
+        .results strong {
+            color: var(--accent-primary);
+        }
+        
+        /* Final CTA */
+        .final-cta {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            padding: 8rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(255, 0, 128, 0.1) 0%, transparent 70%);
+            z-index: 1;
+        }
+
+        .final-cta .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .final-cta h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 2rem;
+        }
+
+        .final-cta p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-primary);
+            padding: 4rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Medium screens - adjust logo text size */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .logo-text {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .logo-text {
+                display: none;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 10, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 0;
+                gap: 0;
+                border-bottom: 1px solid var(--border);
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease, opacity 0.3s ease;
+                opacity: 0;
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                display: flex;
+                max-height: 400px;
+                opacity: 1;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                opacity: 0;
+                transform: translateY(-10px);
+                animation: slideDown 0.3s ease forwards;
+            }
+
+            .nav-links.active li:nth-child(1) { animation-delay: 0.1s; }
+            .nav-links.active li:nth-child(2) { animation-delay: 0.15s; }
+            .nav-links.active li:nth-child(3) { animation-delay: 0.2s; }
+            .nav-links.active li:nth-child(4) { animation-delay: 0.25s; }
+            .nav-links.active li:nth-child(5) { animation-delay: 0.3s; }
+
+            @keyframes slideDown {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 1.2rem 1.5rem;
+                font-size: 1.1rem;
+                transition: all 0.3s ease;
+            }
+
+            .nav-links a:hover {
+                background: rgba(255, 0, 128, 0.1);
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .hero-badge {
+                font-size: 0.8rem;
+                padding: 0.4rem 1rem;
+                margin-top: max(100px, clamp(2rem, 8vh, 5rem));
+            }
+
+            .hero {
+                padding-top: max(150px, clamp(180px, 30vh, 300px));
+                padding-bottom: 2rem;
+                min-height: auto;
+            }
+
+            .hero-content {
+                padding-top: max(80px, clamp(2rem, 6vh, 4rem));
+                min-height: 150px;
+            }
+
+            .video-section {
+                margin-top: 200px;
+            }
+
+            .hero h1 {
+                font-size: clamp(1.8rem, 7vw, 4rem);
+                line-height: 1.2;
+            }
+
+            .hero .sub-headline {
+                font-size: clamp(1rem, 3vw, 1.3rem);
+            }
+
+            .cta-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-primary,
+            .cta-secondary {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .problems-grid,
+            .solutions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .problem-card,
+            .solution-card {
+                padding: 2rem;
+            }
+        }
+
+        /* Smooth animations */
+        .fade-in {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s ease;
+        }
+
+        /* Very short screens - ensure content is always visible */
+        @media (max-height: 700px) {
+            .hero {
+                padding-top: clamp(150px, 25vh, 250px);
+                min-height: auto;
+            }
+            
+            .hero-content {
+                padding-top: max(60px, clamp(1rem, 5vh, 3rem));
+            }
+            
+            .hero-badge {
+                margin-top: max(80px, clamp(2rem, 8vh, 5rem));
+                margin-bottom: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: clamp(1.5rem, 6vw, 3rem);
+                margin-bottom: 1rem;
+            }
+            
+            .hero .sub-headline {
+                font-size: clamp(0.9rem, 2vw, 1.2rem);
+                margin-bottom: 1.5rem;
+            }
+            
+            .cta-group {
+                margin-top: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="nh5.png" alt="Nexus Hestia Technology">
+                <span class="logo-text">Nexus Hestia Technologies</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#problems">Challenges</a></li>
+                <li><a href="solution.html">Solution</a></li>
+                <li><a href="how-it-works.html">Approach</a></li>
+                <li><a href="#case-studies">Cases</a></li>
+                <li><a href="mailto:natasha.bajc@nexushestia.com?subject=Contact%20-%20Nexus%20Hestia%20Inquiry&body=Hi%20Natasha,%0D%0A%0D%0AI'd%20like%20to%20get%20in%20touch%20regarding%20Nexus%20Hestia%20Technologies.%0D%0A%0D%0A">Contact</a></li>
+            </ul>
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge fade-in">// PROPRIETARY AI INTELLIGENCE</div>
+                <h1 class="fade-in">
+                    Your Data Is Your <span class="gradient-text">Future AI</span><br>
+                    Tomorrow's Answers Will Be Found in Data You <span class="gradient-text">Start Accumulating Today</span>
+                </h1>
+                <p class="sub-headline fade-in">
+                    Stop feeding your data to generic AI. Create a custom intelligence that understands your unique processes, speaks your language, and solves problems only your business faces.
+                </p>
+                <div class="cta-group fade-in">
+                    <a href="mailto:natashabajc@nexushestia.com?subject=Build%20My%20AI%20Core%20-%20Inquiry&body=Hi%20Natasha,%0D%0A%0D%0AI'm%20interested%20in%20building%20a%20custom%20AI%20intelligence%20core%20for%20my%20business.%0D%0A%0D%0A" class="cta-primary">Build Your AI Core</a>
+                    <a href="how-it-works.html" class="cta-secondary">See How It Works</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="video-section">
+        <div class="container">
+            <div class="video-container fade-in">
+                <video controls autoplay muted loop playsinline>
+                    <source src="Video_Generation_Nexus_Hestia_Concept.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problems Section -->
+    <section id="problems" class="problem-section">
+        <div class="container">
+            <h2 class="section-title fade-in">
+                We Need to Repeat This: The Seeds of Your <span class="gradient-text">Future Intelligence</span><br>
+                Live in <span class="gradient-text">Today's Data</span>
+            </h2>
+            <div class="problems-grid">
+                <div class="problem-card fade-in">
+                    <h3>Hidden Intelligence</h3>
+                    <p>Your most valuable insights are buried in scattered systems - project data, communications, workflows, and customer interactions that never connect to create a complete picture.</p>
+                </div>
+                <div class="problem-card fade-in">
+                    <h3>Generic Solutions</h3>
+                    <p>Off-the-shelf AI gives you recycled answers from the internet. Your business needs intelligence that understands your unique challenges and opportunities.</p>
+                </div>
+                <div class="problem-card fade-in">
+                    <h3>Reactive Management</h3>
+                    <p>You're always one step behind - discovering problems after they happen instead of predicting and preventing them before they impact your business.</p>
+                </div>
+                <div class="problem-card fade-in">
+                    <h3>Data Silos</h3>
+                    <p>Critical business data lives in isolation across different platforms, preventing you from seeing the full story of your operations and customer relationships.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="solution-section">
+        <div class="container">
+            <h2 class="section-title fade-in">
+                One <span class="gradient-text">Intelligence Core</span><br>
+                Infinite Possibilities
+            </h2>
+            <div class="solution-visual fade-in">
+                <div class="solution-logo">
+                    <img src="nh5.png" alt="Nexus Hestia Intelligence Core">
+                </div>
+                <div class="outcomes">
+                    <div class="outcome">Predictive Project Intelligence</div>
+                    <div class="outcome">Automated Workflow Optimization</div>
+                    <div class="outcome">Real-time Customer Insights</div>
+                    <div class="outcome">Strategic Decision Support</div>
+                </div>
+            </div>
+            <p class="fade-in" style="text-align: center; color: var(--text-secondary); font-size: 1.2rem; margin-top: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                We build a scalable data lake and transform your fragmented business data into a unified intelligence system that thinks, learns, and evolves with your organization.
+            </p>
+        </div>
+    </section>
+
+    <!-- Approach Section -->
+    <section id="approach" class="problem-section">
+        <div class="container">
+            <h2 class="section-title fade-in">
+                From <span class="gradient-text">Chaos</span> to <span class="gradient-text">Clarity</span>
+            </h2>
+            <div class="solutions-grid">
+                <div class="solution-card fade-in">
+                    <h3>PHASE 1: Data Lake & Unification</h3>
+                    <p class="solution-for">FOUNDATION // INTEGRATION // GOVERNANCE</p>
+                    <p>We create a scalable data lake to store all your data, then connect every corner of your business - CRMs, project tools, communication platforms, financial systems, and code repositories - into one intelligent, secure foundation that becomes your single source of truth.</p>
+                </div>
+                <div class="solution-card fade-in">
+                    <h3>PHASE 2: Custom AI Engine</h3>
+                    <p class="solution-for">INTELLIGENCE // PREDICTION // AUTOMATION</p>
+                    <p>Built specifically for your business challenges, our AI models learn your patterns, predict your needs, and provide actionable insights that generic AI could never deliver.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions -->
+    <section class="solution-section">
+        <div class="container">
+            <h2 class="section-title fade-in">
+                Purpose-Built <span class="gradient-text">Intelligence</span>
+            </h2>
+            <div class="solutions-grid">
+                <div class="solution-card fade-in">
+                    <h3>Project Intelligence</h3>
+                    <p class="solution-for">FOR: OPERATIONS // ENGINEERING // PRODUCT</p>
+                    <p>Transform reactive project management into predictive delivery. Our AI analyzes your historical patterns to forecast risks, optimize resources, and prevent delays before they happen.</p>
+                </div>
+                <div class="solution-card fade-in">
+                    <h3>Workflow Intelligence</h3>
+                    <p class="solution-for">FOR: OPERATIONS // EFFICIENCY // GROWTH</p>
+                    <p>Eliminate hidden friction in your processes. We map your entire operational flow to identify bottlenecks, automate repetitive tasks, and accelerate your team's velocity.</p>
+                </div>
+                <div class="solution-card fade-in">
+                    <h3>Customer Intelligence</h3>
+                    <p class="solution-for">FOR: SALES // MARKETING // SUCCESS</p>
+                    <p>Connect internal operations with customer outcomes. Understand how your project delivery, team efficiency, and operational health directly impact customer satisfaction and revenue.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies -->
+    <section id="case-studies" class="problem-section">
+        <div class="container">
+            <h2 class="section-title fade-in">
+                Real Results from <span class="gradient-text">Real Businesses</span>
+            </h2>
+            
+            <div class="case-study fade-in">
+                <h3>Professional Services Transformation</h3>
+                <div class="case-detail">
+                    <strong>Challenge:</strong> Consistent project overruns and inaccurate client proposals leading to margin erosion.
+                </div>
+                <div class="case-detail">
+                    <strong>Solution:</strong> Unified project management and financial data with custom AI models for accurate cost prediction and timeline forecasting based on the firm's unique delivery patterns.
+                </div>
+                <div class="results">
+                    <strong>Results:</strong> 18% improvement in profit margins, 25% reduction in project delays, and 90% accuracy in project cost predictions.
+                </div>
+            </div>
+
+            <div class="case-study fade-in">
+                <h3>SaaS Company Optimization</h3>
+                <div class="case-detail">
+                    <strong>Challenge:</strong> High customer churn correlated with slow support resolution times and disconnect between support and engineering teams.
+                </div>
+                <div class="case-detail">
+                    <strong>Solution:</strong> Connected support ticket data with developer workflows and communication patterns to identify process gaps and optimize escalation procedures.
+                </div>
+                <div class="results">
+                    <strong>Results:</strong> 35% faster ticket resolution, 15% reduction in customer churn, and 40% improvement in customer satisfaction scores.
+                </div>
+            </div>
+
+            <div class="case-study fade-in">
+                <h3>Manufacturing Intelligence</h3>
+                <div class="case-detail">
+                    <strong>Challenge:</strong> Unpredictable supply chain disruptions and inability to correlate production data with customer demand patterns.
+                </div>
+                <div class="case-detail">
+                    <strong>Solution:</strong> Integrated production, inventory, and customer data to create predictive models for demand forecasting and supply chain optimization.
+                </div>
+                <div class="results">
+                    <strong>Results:</strong> 22% reduction in inventory costs, 30% improvement in demand prediction accuracy, and 20% faster response to market changes.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section id="contact" class="final-cta">
+        <div class="container">
+            <h2 class="fade-in">
+                Stop Competing with <span class="gradient-text">Generic AI</span><br>
+                Start Leading with <span class="gradient-text">Your AI</span>
+            </h2>
+            <p class="fade-in">
+                In a world of commoditized intelligence, the ultimate competitive advantage is an AI that knows your business better than you know it yourself.
+            </p>
+            <div class="cta-group fade-in">
+                <a href="mailto:natashabajc@nexushestia.com?subject=Strategy%20Session%20Request&body=Hi%20Natasha,%0D%0A%0D%0AI'd%20like%20to%20schedule%20a%20strategy%20session%20to%20discuss%20how%20Nexus%20Hestia%20can%20help%20my%20business.%0D%0A%0D%0A" class="cta-primary">Schedule Strategy Session</a>
+                <a href="how-it-works.html" class="cta-secondary">Explore Our Approach</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Nexus Hestia Technologies. Building Tomorrow's Intelligence, Today.</p>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        const navbar = document.querySelector('.navbar');
+
+        function toggleMobileMenu() {
+            const isActive = mobileMenu.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            if (isActive) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            navLinks.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Toggle menu on click
+        mobileMenu.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMobileMenu();
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (navLinks.classList.contains('active') && 
+                !navLinks.contains(e.target) && 
+                !mobileMenu.contains(e.target)) {
+                closeMobileMenu();
+            }
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+
+        // Close menu on window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+
+        // Enhanced smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80; // Navbar height
+                    const targetPosition = target.offsetTop - offset;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Fade-in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

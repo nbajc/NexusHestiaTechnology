@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Solution - Nexus Hestia Technologies</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-card: #1a1a1a;
+            --accent-primary: #ff0080;
+            --accent-secondary: #ff8c00;
+            --accent-tertiary: #0080ff;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --border: #333333;
+            --glow: 0 0 20px rgba(255, 0, 128, 0.4);
+            --glow-secondary: 0 0 20px rgba(255, 140, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        section[id] {
+            scroll-margin-top: 100px;
+        }
+        
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 10px rgba(255, 0, 128, 0.5));
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.01em;
+        }
+
+        .back-button {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            color: var(--text-primary);
+            text-decoration: none;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            padding-top: 140px;
+            padding-bottom: 4rem;
+            background: radial-gradient(ellipse at center, rgba(255, 0, 128, 0.15) 0%, transparent 70%);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .gradient-text {
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+        }
+
+        /* Solution Visual */
+        .solution-visual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+            margin: 4rem 0;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(255, 0, 128, 0.05) 0%, rgba(255, 140, 0, 0.05) 100%);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .solution-logo {
+            max-width: 300px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .solution-logo img {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 0 30px rgba(255, 0, 128, 0.3));
+        }
+
+        .outcomes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .outcome {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .outcome:hover {
+            background: rgba(255, 0, 128, 0.1);
+            border-color: var(--accent-primary);
+            transform: translateY(-5px);
+            box-shadow: var(--glow);
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 3rem;
+            line-height: 1.2;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            padding: 2.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(255, 0, 128, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .feature-tag {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(255, 0, 128, 0.1);
+            border: 1px solid var(--accent-primary);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Core Solution */
+        .core-solution {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(255, 0, 128, 0.1) 0%, rgba(255, 140, 0, 0.1) 100%);
+            border: 2px solid var(--accent-primary);
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .core-solution h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .core-solution p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 5rem 0;
+            text-align: center;
+            background: radial-gradient(ellipse at center, rgba(255, 0, 128, 0.1) 0%, transparent 70%);
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary, .cta-secondary {
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .cta-primary {
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--text-primary);
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-primary:hover::before {
+            left: 100%;
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--glow);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+        }
+
+        .cta-secondary:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-primary);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer p {
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo-text {
+                display: none;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            .hero {
+                padding-top: 100px;
+            }
+
+            .solution-visual {
+                padding: 2rem 1rem;
+            }
+
+            .outcomes {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-primary, .cta-secondary {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="nh5.png" alt="Nexus Hestia Technology">
+                <span class="logo-text">Nexus Hestia Technologies</span>
+            </a>
+            <a href="index.html" class="back-button">← Back to Home</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="page-title">
+                    Your Data Is Your <span class="gradient-text">Future AI</span><br>
+                    Tomorrow's Answers Will Be Found in Data You <span class="gradient-text">Start Accumulating Today</span>
+                </h1>
+                <p class="page-subtitle">
+                    Stop feeding your data to generic AI. Build a custom intelligence core that evolves with your business, understands your unique challenges, and delivers insights no off-the-shelf solution can match.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Visual -->
+    <section class="content-section">
+        <div class="container">
+            <div class="solution-visual">
+                <div class="solution-logo">
+                    <img src="nh5.png" alt="Nexus Hestia Intelligence Core">
+                </div>
+                <div class="outcomes">
+                    <div class="outcome">Predictive Project Intelligence</div>
+                    <div class="outcome">Automated Workflow Optimization</div>
+                    <div class="outcome">Real-time Customer Insights</div>
+                    <div class="outcome">Strategic Decision Support</div>
+                </div>
+            </div>
+
+            <div class="core-solution">
+                <h2>One <span class="gradient-text">Intelligence Core</span>, Infinite Possibilities</h2>
+                <p>
+                    We build a scalable data lake and transform your fragmented business data into a unified intelligence system that thinks, learns, and evolves with your organization.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Problem We Solve -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">
+                The Problem: Your Intelligence Is <span class="gradient-text">Scattered</span>
+            </h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Hidden Intelligence</h3>
+                    <p>Your most valuable insights are buried across scattered systems—project data, communications, workflows, and customer interactions that never connect to create a complete picture.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>Generic AI Won't Cut It</h3>
+                    <p>Off-the-shelf AI gives you recycled answers from the internet. Your business needs intelligence that understands YOUR unique challenges, patterns, and opportunities.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Always Reactive, Never Proactive</h3>
+                    <p>You're discovering problems after they happen instead of predicting and preventing them before they impact your business.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏢</div>
+                    <h3>Data Silos Everywhere</h3>
+                    <p>Critical business data lives in isolation across different platforms, preventing you from seeing the full story of your operations and customer relationships.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Solution -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">
+                Our Solution: Your <span class="gradient-text">Custom Intelligence Core</span>
+            </h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-tag">PHASE 1</span>
+                    <h3>Data Lake & Unification</h3>
+                    <p><strong>Foundation • Integration • Governance</strong></p>
+                    <p>We create a scalable data lake to store all your data, then connect every corner of your business—CRMs, project tools, communication platforms, financial systems, and code repositories—into one intelligent, secure foundation that becomes your single source of truth.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-tag">PHASE 2</span>
+                    <h3>Custom AI Engine</h3>
+                    <p><strong>Intelligence • Prediction • Automation</strong></p>
+                    <p>Built specifically for your business challenges, our AI models learn your patterns, predict your needs, and provide actionable insights that generic AI could never deliver.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Purpose-Built Intelligence -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">
+                Purpose-Built <span class="gradient-text">Intelligence Solutions</span>
+            </h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-tag">FOR: OPERATIONS • ENGINEERING • PRODUCT</span>
+                    <h3>Project Intelligence</h3>
+                    <p>Transform reactive project management into predictive delivery. Our AI analyzes your historical patterns to forecast risks, optimize resources, and prevent delays before they happen.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-tag">FOR: OPERATIONS • EFFICIENCY • GROWTH</span>
+                    <h3>Workflow Intelligence</h3>
+                    <p>Eliminate hidden friction in your processes. We map your entire operational flow to identify bottlenecks, automate repetitive tasks, and accelerate your team's velocity.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-tag">FOR: SALES • MARKETING • SUCCESS</span>
+                    <h3>Customer Intelligence</h3>
+                    <p>Connect internal operations with customer outcomes. Understand how your project delivery, team efficiency, and operational health directly impact customer satisfaction and revenue.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why This Matters -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">
+                Why This <span class="gradient-text">Matters Now</span>
+            </h2>
+            <div class="core-solution">
+                <p style="font-size: 1.3rem; margin-bottom: 2rem;">
+                    In a world of commoditized intelligence, the ultimate competitive advantage is an AI that knows your business better than you know it yourself.
+                </p>
+                <p>
+                    Every day you delay, your competitors are building their data foundations. The companies that win tomorrow are the ones accumulating the right data today—transforming it into proprietary intelligence that becomes their moat.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="section-title">
+                Stop Competing with <span class="gradient-text">Generic AI</span><br>
+                Start Leading with <span class="gradient-text">Your AI</span>
+            </h2>
+            <div class="cta-group">
+                <a href="mailto:natashabajc@nexushestia.com?subject=Build%20My%20Intelligence%20Core&body=Hi%20Natasha,%0D%0A%0D%0AI'm%20interested%20in%20building%20a%20custom%20AI%20intelligence%20core%20for%20my%20business.%0D%0A%0D%0A" class="cta-primary">Build Your Intelligence Core</a>
+                <a href="how-it-works.html" class="cta-secondary">See How It Works</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Nexus Hestia Technologies. Building Tomorrow's Intelligence, Today.</p>
+        </div>
+    </footer>
+</body>
+</html>

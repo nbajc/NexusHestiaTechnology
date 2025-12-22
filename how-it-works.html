@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works - Nexus Hestia Technologies</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-card: #1a1a1a;
+            --accent-primary: #ff0080;
+            --accent-secondary: #ff8c00;
+            --accent-tertiary: #0080ff;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --border: #333333;
+            --glow: 0 0 20px rgba(255, 0, 128, 0.4);
+            --glow-secondary: 0 0 20px rgba(255, 140, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Prevent navbar from covering content when navigating */
+        section[id] {
+            scroll-margin-top: 100px;
+        }
+        
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 10px rgba(255, 0, 128, 0.5));
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.01em;
+        }
+
+        .back-button {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            color: var(--text-primary);
+            text-decoration: none;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            padding-top: 120px;
+            padding-bottom: 4rem;
+            background: radial-gradient(ellipse at center, rgba(255, 0, 128, 0.15) 0%, transparent 70%);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .gradient-text {
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Process Section */
+        .process-section {
+            padding: 6rem 0;
+            background: var(--bg-primary);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .process-timeline {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
+            transform: translateX(-50%);
+        }
+
+        .process-step {
+            position: relative;
+            margin-bottom: 6rem;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .process-step:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .step-number {
+            flex: 0 0 100px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 900;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 10px 30px rgba(255, 0, 128, 0.3);
+        }
+
+        .step-content {
+            flex: 1;
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .step-content:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255, 0, 128, 0.2);
+        }
+
+        .step-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .step-subtitle {
+            font-size: 0.9rem;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .step-description {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-details {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .step-detail-item {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 0, 128, 0.05);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-primary);
+        }
+
+        .step-detail-item strong {
+            color: var(--accent-secondary);
+            min-width: 120px;
+        }
+
+        /* Accumulation Note */
+        .accumulation-note {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 2.5rem;
+            background: linear-gradient(135deg, rgba(255, 0, 128, 0.1), rgba(255, 140, 0, 0.1));
+            border: 2px solid var(--accent-primary);
+            border-radius: 16px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .accumulation-note::before {
+            content: '⏳';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+            background: var(--bg-primary);
+            padding: 0 1rem;
+        }
+
+        .accumulation-note h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+        }
+
+        .accumulation-note p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            font-style: italic;
+        }
+
+        /* Deliverables Section */
+        .deliverables-section {
+            padding: 6rem 0;
+            background: var(--bg-secondary);
+        }
+
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .deliverable-card {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .deliverable-card:hover {
+            border-color: var(--accent-secondary);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255, 140, 0, 0.2);
+        }
+
+        .deliverable-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .deliverable-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .deliverable-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 0;
+            background: radial-gradient(ellipse at center, rgba(255, 0, 128, 0.1) 0%, transparent 70%);
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .cta-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary {
+            padding: 1.2rem 2.5rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-primary:hover::before {
+            left: 100%;
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(255, 0, 128, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-primary);
+            padding: 4rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .process-timeline::before {
+                left: 50px;
+            }
+
+            .process-step {
+                flex-direction: column !important;
+                align-items: flex-start;
+                padding-left: 120px;
+            }
+
+            .step-number {
+                position: absolute;
+                left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo-text {
+                display: none;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            .hero {
+                padding-top: 100px;
+            }
+
+            .process-step {
+                padding-left: 80px;
+            }
+
+            .step-number {
+                width: 70px;
+                height: 70px;
+                font-size: 1.8rem;
+            }
+
+            .accumulation-note {
+                margin: 3rem auto;
+                padding: 2rem 1.5rem;
+            }
+
+            .accumulation-note h4 {
+                font-size: 1.2rem;
+            }
+
+            .accumulation-note p {
+                font-size: 1rem;
+            }
+
+            .deliverables-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-primary {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in:nth-child(4) { animation-delay: 0.4s; }
+        .fade-in:nth-child(5) { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="nh5.png" alt="Nexus Hestia Technology">
+                <span class="logo-text">Nexus Hestia Technologies</span>
+            </a>
+            <a href="index.html" class="back-button">← Back to Home</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="page-title fade-in">
+                    How We Build Your <span class="gradient-text">Intelligence Core</span>
+                </h1>
+                <p class="page-subtitle fade-in">
+                    A proven, systematic approach to transforming your data into a custom AI that understands your business from the inside out.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Timeline -->
+    <section class="process-section">
+        <div class="container">
+            <h2 class="section-title fade-in">
+                The <span class="gradient-text">6-Phase Journey</span>
+            </h2>
+
+            <div class="process-timeline">
+                <!-- Phase 1 -->
+                <div class="process-step fade-in">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-subtitle">Discovery & Assessment</div>
+                        <h3 class="step-title">Understanding Your Data Landscape</h3>
+                        <p class="step-description">
+                            We begin by mapping your entire data ecosystem, identifying critical systems, workflows, and decision points that will form the foundation of your AI intelligence.
+                        </p>
+                        <div class="step-details">
+                            <div class="step-detail-item">
+                                <strong>Duration:</strong>
+                                <span>2-3 weeks</span>
+                            </div>
+                            <div class="step-detail-item">
+                                <strong>Activities:</strong>
+                                <span>Stakeholder interviews, system audits, data source mapping, business process analysis</span>
+                            </div>
+                            <div class="step-detail-item">
+                                <strong>Deliverable:</strong>
+                                <span>Comprehensive Data Architecture Report with AI roadmap</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 2 -->
+                <div class="process-step fade-in">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-subtitle">Data Unification</div>
+                        <h3 class="step-title">Building Your Data Lake & Single Source of Truth</h3>
+                        <p class="step-description">
+                            We create a scalable data lake to store all your raw and processed data, then connect all your disparate systems—CRMs, project tools, communication platforms, financial software—into one unified, secure, and governed data foundation.
+                        </p>
+                        <div class="step-details">
+                            <div class="step-detail-item">
+                                <strong>Duration:</strong>
+                                <span>4-8 weeks</span>
+                            </div>
+                            <div class="step-detail-item">
+                                <strong>Activities:</strong>
+                                <span>Data lake architecture, API integrations, data pipeline construction, schema harmonization, data governance implementation</span>
+                            </div>
+                            <div class="step-detail-item">
+                                <strong>Deliverable:</strong>
+                                <span>Scalable Data Lake + Unified Data Platform with real-time synchronization</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accumulation Note -->
+                <div class="accumulation-note fade-in">
+                    <h4>The Power of Accumulation</h4>
+                    <p>
+                        As your data lake begins collecting information from all your systems, every interaction, transaction, and decision becomes part of your growing intelligence foundation. This continuous accumulation of data is what transforms generic AI into your personalized advantage—the longer you collect, the smarter your AI becomes.
+                    </p>
+                </div>
+
+                <!-- Phase 3 -->
+                <div class="process-step fade-in">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-subtitle">Data Preparation</div>
+                        <h3 class="step-title">Cleaning & Structuring for AI</h3>
+                        <p class="step-description">
+                            Raw data is transformed into AI-ready datasets through cleaning, normalization, feature engineering, and quality assurance processes.
+                        </p>
+                        <div class="step-details">
+                            <div class="step-detail-item">
+                                <strong>Duration:</strong>
+                                <span>3-6 weeks</span>
+                            </div>
+                            <div class="step-detail-item">
+                                <strong>Activities:</strong>
+                                <span>Data cleansing, deduplication, normalization, feature extraction, quality validation</span>
+                            </div>
+                            <div class="step-detail-item">
+                                <strong>Deliverable:</strong>
+                                <span>Production-ready datasets with documentation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 4 -->
+                <div class="process-step fade-in">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-subtitle">Custom AI Development</div>
+                        <h3 class="step-title">Training Models on Your Data</h3>
+                        <p class="step-description">
+                            We develop and train bespoke AI models specifically designed to solve your unique business challenges, using your own proprietary data patterns.
+                        </p>
+                        <div class="step-details">
+                            <div class="step-detail-item">
+                                <strong>Duration:</strong>
+                                <span>6-12 weeks</span>
+                            </div>
+                            <div class="step-detail-item">
+                                <strong>Activities:</strong>
+                                <span>Model architecture design, training, validation, hyperparameter tuning, performance optimization</span>
+                            </div>
+                            <div class="step-detail-item">
+                                <strong>Deliverable:</strong>
+                                <span>Custom-trained AI models with performance benchmarks</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 5 -->
+                <div class="process-step fade-in">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <div class="step-subtitle">Integration & Deployment</div>
+                        <h3 class="step-title">Embedding Intelligence into Your Workflows</h3>
+                        <p class="step-description">
+                            Your custom AI is seamlessly integrated into existing tools and workflows, with user-friendly interfaces and automated decision support systems.
+                        </p>
+                        <div class="step-details">
+                            <div class="step-detail-item">
+                                <strong>Duration:</strong>
+                                <span>4-6 weeks</span>
+                            </div>
+                            <div class="step-detail-item">
+                                <strong>Activities:</strong>
+                                <span>API development, UI/UX design, system integration, user training, documentation</span>
+                            </div>
+                            <div class="step-detail-item">
+                                <strong>Deliverable:</strong>
+                                <span>Live AI system with user interfaces and training materials</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 6 -->
+                <div class="process-step fade-in">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <div class="step-subtitle">Continuous Improvement</div>
+                        <h3 class="step-title">Evolving with Your Business</h3>
+                        <p class="step-description">
+                            Your AI continues to learn and improve through ongoing monitoring, feedback loops, model retraining, and expansion to new use cases.
+                        </p>
+                        <div class="step-details">
+                            <div class="step-detail-item">
+                                <strong>Duration:</strong>
+                                <span>Ongoing</span>
+                            </div>
+                            <div class="step-detail-item">
+                                <strong>Activities:</strong>
+                                <span>Performance monitoring, model retraining, feature additions, use case expansion</span>
+                            </div>
+                            <div class="step-detail-item">
+                                <strong>Deliverable:</strong>
+                                <span>Monthly performance reports and quarterly roadmap updates</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deliverables Section -->
+    <section class="deliverables-section">
+        <div class="container">
+            <h2 class="section-title fade-in">
+                What You'll <span class="gradient-text">Receive</span>
+            </h2>
+
+            <div class="deliverables-grid">
+                <div class="deliverable-card fade-in">
+                    <div class="deliverable-icon">🏊</div>
+                    <h3 class="deliverable-title">Scalable Data Lake</h3>
+                    <p class="deliverable-description">
+                        A cloud-native data lake architecture designed to ingest, store, and process unlimited amounts of structured and unstructured data from all your business systems.
+                    </p>
+                </div>
+
+                <div class="deliverable-card fade-in">
+                    <div class="deliverable-icon">📊</div>
+                    <h3 class="deliverable-title">Unified Data Platform</h3>
+                    <p class="deliverable-description">
+                        A secure, governed data infrastructure built on top of your data lake that consolidates all business systems into a single source of truth with real-time synchronization.
+                    </p>
+                </div>
+
+                <div class="deliverable-card fade-in">
+                    <div class="deliverable-icon">🧠</div>
+                    <h3 class="deliverable-title">Custom AI Models</h3>
+                    <p class="deliverable-description">
+                        Proprietary AI models trained specifically on your data, designed to solve your unique business challenges with unmatched accuracy.
+                    </p>
+                </div>
+
+                <div class="deliverable-card fade-in">
+                    <div class="deliverable-icon">⚡</div>
+                    <h3 class="deliverable-title">Intelligent Dashboards</h3>
+                    <p class="deliverable-description">
+                        Intuitive interfaces that surface insights, predictions, and recommendations directly within your existing workflows and tools.
+                    </p>
+                </div>
+
+                <div class="deliverable-card fade-in">
+                    <div class="deliverable-icon">🔄</div>
+                    <h3 class="deliverable-title">Automated Workflows</h3>
+                    <p class="deliverable-description">
+                        AI-powered automation that handles repetitive tasks, optimizes processes, and frees your team to focus on strategic work.
+                    </p>
+                </div>
+
+                <div class="deliverable-card fade-in">
+                    <div class="deliverable-icon">📈</div>
+                    <h3 class="deliverable-title">Predictive Analytics</h3>
+                    <p class="deliverable-description">
+                        Forward-looking insights that help you anticipate risks, identify opportunities, and make data-driven decisions with confidence.
+                    </p>
+                </div>
+
+                <div class="deliverable-card fade-in">
+                    <div class="deliverable-icon">🔒</div>
+                    <h3 class="deliverable-title">Complete Ownership</h3>
+                    <p class="deliverable-description">
+                        Full access to your AI models, code, and infrastructure—no vendor lock-in, no black boxes, complete transparency and control.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title fade-in">
+                Ready to Build Your <span class="gradient-text">Intelligence Advantage</span>?
+            </h2>
+            <p class="cta-description fade-in">
+                Let's discuss how we can transform your data into a competitive advantage that no one else can replicate.
+            </p>
+            <div class="cta-buttons fade-in">
+                <a href="/cdn-cgi/l/email-protection#a8c6c9dcc9dbc0c986cac9c2cbe8c6cdd0dddbc0cddbdcc1c986cbc7c597dbddcac2cdcbdc95fbdcdac9dccdcfd18d9a98fbcddbdbc1c7c68d9a98facdd9ddcddbdc8ecac7ccd195e0c18d9a98e6c9dcc9dbc0c9848d98ec8d98e98d98ec8d98e9e18fc58d9a98c1c6dccddacddbdccdcc8d9a98c1c68d9a98dbcbc0cdccddc4c1c6cf8d9a98c98d9a98dbdcdac9dccdcfd18d9a98dbcddbdbc1c7c68d9a98dcc78d9a98ccc1dbcbdddbdb8d9a98caddc1c4ccc1c6cf8d9a98c98d9a98cbdddbdcc7c58d9a98e9e18d9a98c1c6dccdc4c4c1cfcdc6cbcd8d9a98cbc7dacd8d9a98cec7da8d9a98c5d18d9a98c7dacfc9c6c1d2c9dcc1c7c6868d98ec8d98e98d98ec8d98e9" class="cta-primary">Schedule a Strategy Session</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Nexus Hestia Technologies. Building Tomorrow's Intelligence, Today.</p>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if 
