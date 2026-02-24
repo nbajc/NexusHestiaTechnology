@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us — Nexus Hestia Technology</title>
+    <meta name="description" content="Meet the founders of Nexus Hestia Technology — building bespoke AI ecosystems where your data is your future intelligence.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg:          #0a0a0a;
+            --bg2:         #111111;
+            --bg3:         #1a1a1a;
+            --border:      #333333;
+            --border-glow: rgba(229, 38, 185, 0.3);
+            --fuchsia:     #E526B9;
+            --fuchsia-dim: rgba(229, 38, 185, 0.12);
+            --orange:      #F27D1C;
+            --cream:       #FFF4D9;
+            --taupe:       #A78A82;
+            --taupe-lt:    #C4A89E;
+            --mono:        'JetBrains Mono', monospace;
+            --sans:        'Inter', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* NAV */
+        .navbar {
+            position: fixed;
+            top: 0; width: 100%;
+            z-index: 1000;
+            padding: 1.25rem 0;
+            background: rgba(10,10,10,0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: box-shadow 0.3s;
+        }
+
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo img { height: 34px; width: auto; }
+
+        .logo-text {
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            color: #fff;
+        }
+
+        .logo-text span { color: var(--fuchsia); }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 0.2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #a0a0a0;
+            text-decoration: none;
+            padding: 0.4rem 0.85rem;
+            transition: color 0.2s, background 0.2s;
+            border-radius: 2px;
+        }
+
+        .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.06); }
+        .nav-links a.active { color: var(--fuchsia); }
+
+        .nav-links .nav-cta {
+            background: var(--fuchsia) !important;
+            color: var(--cream) !important;
+            padding: 0.48rem 1.2rem !important;
+        }
+
+        .nav-links .nav-cta:hover {
+            background: var(--orange) !important;
+            box-shadow: 0 0 20px rgba(229,38,185,0.4);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+
+        .hamburger span { width: 22px; height: 2px; background: #fff; transition: all 0.3s; }
+
+        /* PAGE HERO */
+        .page-hero {
+            padding: 10rem 2.5rem 5.5rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 5rem; right: 0;
+            width: 600px; height: 600px;
+            background: radial-gradient(ellipse, rgba(229,38,185,0.07) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero-tag {
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--fuchsia);
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .hero-tag::before {
+            content: '';
+            width: 32px; height: 1px;
+            background: var(--fuchsia);
+            display: inline-block;
+        }
+
+        .hero-h1 {
+            font-size: clamp(2.8rem, 6vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+
+        .g {
+            background: linear-gradient(135deg, var(--fuchsia) 0%, var(--orange) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-sub {
+            font-size: 1.05rem;
+            color: #a0a0a0;
+            max-width: 580px;
+            line-height: 1.75;
+            font-weight: 300;
+        }
+
+        /* DIVIDER */
+        .divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
+
+        /* MISSION */
+        .mission {
+            padding: 6rem 2.5rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: start;
+        }
+
+        .sec-label {
+            font-family: var(--mono);
+            font-size: 0.66rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--fuchsia);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .sec-label::before { content: ''; width: 24px; height: 1px; background: var(--fuchsia); display: inline-block; }
+
+        .mission-quote {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+            color: var(--cream);
+            margin-bottom: 2rem;
+        }
+
+        .mission-quote .hl { color: var(--fuchsia); }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
+        .stat {
+            background: var(--bg);
+            padding: 1.4rem 1rem;
+            text-align: center;
+            transition: background 0.2s;
+        }
+
+        .stat:hover { background: var(--bg2); }
+
+        .stat-num {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--fuchsia);
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 0.35rem;
+        }
+
+        .stat-lbl {
+            font-family: var(--mono);
+            font-size: 0.58rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #666;
+        }
+
+        .mission-body p {
+            font-size: 0.92rem;
+            line-height: 1.85;
+            color: #a0a0a0;
+            font-weight: 300;
+            margin-bottom: 1.1rem;
+        }
+
+        .mission-body p:last-child { margin-bottom: 0; }
+        .mission-body strong { color: var(--taupe-lt); font-weight: 500; }
+
+        /* TEAM */
+        .team-wrap {
+            padding: 0 2.5rem 8rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .sec-head {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .sec-head-lbl {
+            font-family: var(--mono);
+            font-size: 0.66rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--fuchsia);
+            white-space: nowrap;
+        }
+
+        .sec-head-line { flex: 1; height: 1px; background: var(--border); }
+
+        /* CARD */
+        .person-card {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            margin-bottom: 3px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .person-card:hover { border-color: var(--border-glow); }
+
+        .card-photo {
+            position: relative;
+            overflow: hidden;
+            background: var(--bg3);
+            min-height: 520px;
+        }
+
+        .card-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 10%;
+            display: block;
+            filter: grayscale(15%);
+            transition: filter 0.4s, transform 0.5s;
+        }
+
+        .person-card:hover .card-photo img {
+            filter: grayscale(0%);
+            transform: scale(1.04);
+        }
+
+        .card-photo::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, transparent 70%, var(--bg2) 100%);
+            pointer-events: none;
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            min-height: 520px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1rem;
+            border-right: 1px solid var(--border);
+        }
+
+        .ph-icon {
+            width: 80px; height: 80px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .ph-icon svg { stroke: #444; }
+
+        .ph-text {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #444;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .card-content {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-role {
+            font-family: var(--mono);
+            font-size: 0.63rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--fuchsia);
+            margin-bottom: 0.6rem;
+        }
+
+        .card-name {
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            font-weight: 800;
+            letter-spacing: -0.035em;
+            line-height: 1.0;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-title {
+            font-size: 0.85rem;
+            color: var(--taupe);
+            margin-bottom: 2rem;
+            letter-spacing: 0.02em;
+        }
+
+        .card-bio { flex: 1; margin-bottom: 1.8rem; }
+
+        .card-bio p {
+            font-size: 0.88rem;
+            line-height: 1.85;
+            color: #a0a0a0;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .card-bio p:last-child { margin-bottom: 0; }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .tag {
+            font-family: var(--mono);
+            font-size: 0.58rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.27rem 0.7rem;
+            border: 1px solid var(--border);
+            color: #666;
+            transition: all 0.2s;
+        }
+
+        .person-card:hover .tag { border-color: rgba(229,38,185,0.3); color: var(--taupe); }
+
+        .card-creds { margin-bottom: 1.8rem; }
+
+        .creds-title {
+            font-family: var(--mono);
+            font-size: 0.58rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #555;
+            margin-bottom: 0.8rem;
+        }
+
+        .cred-row { display: flex; align-items: flex-start; gap: 0.7rem; margin-bottom: 0.55rem; }
+
+        .cred-dot {
+            width: 5px; height: 5px;
+            background: var(--fuchsia);
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 0.44rem;
+        }
+
+        .cred-text { font-size: 0.8rem; color: #808080; line-height: 1.5; font-weight: 300; }
+
+        .card-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: auto; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--mono);
+            font-size: 0.63rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 0.58rem 1.2rem;
+            text-decoration: none;
+            transition: all 0.25s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary { background: var(--fuchsia); color: var(--cream); }
+        .btn-primary:hover { background: var(--orange); box-shadow: 0 0 24px rgba(229,38,185,0.45); }
+
+        .btn-outline { background: transparent; color: #808080; border: 1px solid var(--border); }
+        .btn-outline:hover { border-color: var(--fuchsia); color: var(--fuchsia); }
+
+        .edit-note {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            color: var(--orange);
+            padding: 0.4rem 0.8rem;
+            border: 1px dashed rgba(242,125,28,0.35);
+            background: rgba(242,125,28,0.05);
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        /* BOTTOM CTA */
+        .bottom-cta {
+            background: var(--bg2);
+            border-top: 1px solid var(--border);
+            padding: 5rem 2.5rem;
+        }
+
+        .cta-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .cta-text {
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.25;
+        }
+
+        .cta-text span {
+            background: linear-gradient(135deg, var(--fuchsia), var(--orange));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-big {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 1rem 2.2rem;
+            background: var(--fuchsia);
+            color: var(--cream);
+            text-decoration: none;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .btn-big:hover { background: var(--orange); box-shadow: 0 0 32px rgba(229,38,185,0.5); gap: 1rem; }
+
+        /* FOOTER */
+        footer {
+            background: var(--bg);
+            border-top: 1px solid var(--border);
+            padding: 2rem 2.5rem;
+        }
+
+        .footer-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .f-logo { font-weight: 800; font-size: 0.95rem; letter-spacing: 0.05em; color: #fff; text-decoration: none; }
+        .f-logo span { color: var(--fuchsia); }
+
+        .f-links { display: flex; gap: 1.5rem; list-style: none; }
+
+        .f-links a {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #555;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .f-links a:hover { color: var(--fuchsia); }
+
+        .f-copy { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: #444; }
+
+        /* SCROLL REVEAL */
+        .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* RESPONSIVE */
+        @media (max-width: 1050px) {
+            .person-card { grid-template-columns: 280px 1fr; }
+        }
+
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%; left: 0;
+                width: 100%;
+                background: rgba(10,10,10,0.98);
+                padding: 1rem 2rem 2rem;
+                border-bottom: 1px solid var(--border);
+                gap: 0.25rem;
+            }
+
+            .mission { grid-template-columns: 1fr; gap: 3rem; }
+            .person-card { grid-template-columns: 1fr; }
+            .card-photo { min-height: 380px; }
+            .cta-inner { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .page-hero { padding: 8rem 1.5rem 4rem; }
+            .mission, .team-wrap { padding-left: 1.5rem; padding-right: 1.5rem; }
+            .card-content { padding: 2rem 1.5rem; }
+            .stat-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">
+            <img src="nh5.png" alt="Nexus Hestia" onerror="this.style.display='none'">
+            <span class="logo-text">NEXUS <span>HESTIA</span></span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+            <li><a href="solution.html">Solutions</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="index.html#contact" class="nav-cta">Contact</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+    <p class="hero-tag">Nexus Hestia Technology — The Team</p>
+    <h1 class="hero-h1">
+        The minds behind<br>
+        <span class="g">your intelligence.</span>
+    </h1>
+    <p class="hero-sub">
+        We are architects of bespoke AI — building systems that don't just automate,
+        but genuinely understand the shape of your organization.
+    </p>
+</section>
+
+<div class="divider"></div>
+
+<!-- MISSION -->
+<section class="mission reveal">
+    <div>
+        <p class="sec-label">Our Purpose</p>
+        <h2 class="mission-quote">"Your Data Is Your<br><span class="hl">Future AI."</span></h2>
+        <div class="stat-grid">
+            <div class="stat"><div class="stat-num">2024</div><div class="stat-lbl">Founded</div></div>
+            <div class="stat"><div class="stat-num">100%</div><div class="stat-lbl">Bespoke AI</div></div>
+            <div class="stat"><div class="stat-num">∞</div><div class="stat-lbl">Data Potential</div></div>
+        </div>
+    </div>
+    <div class="mission-body">
+        <p>Nexus Hestia Technology builds <strong>personalized AI ecosystems</strong> that treat your proprietary data as the irreplaceable strategic asset it is. We reject generic, one-size-fits-all models in favor of intelligence engineered around the unique patterns, relationships, and insights embedded within your organization.</p>
+        <p>Our work bridges high-performance architectural thinking with intelligent, data-driven workflows — creating systems that connect your data foundation to AI engines tailored for your exact challenges.</p>
+        <p>We believe the most powerful competitive advantage any organization can build is one that cannot be replicated: an AI that knows your business at its deepest level because it was built from the inside out.</p>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TEAM -->
+<div class="team-wrap">
+    <div class="sec-head reveal">
+        <span class="sec-head-lbl">The Founders</span>
+        <div class="sec-head-line"></div>
+    </div>
+
+    <!-- NATASHA BAJC -->
+    <div class="person-card reveal">
+        <div class="card-photo">
+            <img
+                src="natashaBajcBW.JPG"
+                alt="Natasha Bajc — Co-Founder & CEO, Nexus Hestia Technology"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            >
+            <div class="photo-placeholder" style="display:none;">
+                <div class="ph-icon">
+                    <svg width="38" height="38" fill="none" viewBox="0 0 24 24" stroke-width="1">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.118a7.5 7.5 0 0115 0"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="card-content">
+            <div>
+                <p class="card-role">Co-Founder &amp; CEO · Chief Strategist</p>
+                <h2 class="card-name">Natasha Bajc</h2>
+                <p class="card-title">Architect · AI Researcher · Educator · Multimedia Artist</p>
+            </div>
+
+            <div class="card-bio">
+                <p>Natasha is an interdisciplinary architect, computational designer, and AI researcher whose practice dissolves the boundary between built space and intelligent systems. With graduate degrees from SCI-Arc (M.Arch, Algorithmic Design) and the University of Belgrade (M.Eng Architecture &amp; Urbanism), and ongoing M.CS studies in Affective Computing at USC, she brings a rare synthesis of spatial intuition and machine intelligence to enterprise AI.</p>
+                <p>She has led design and technology teams across three continents — from Disneyland Tokyo to Caesars Palace Las Vegas — and founded multiple research and technology ventures: me NaN ce Institute, Volynt Inc., and Zetta AI. At Nexus Hestia, she directs the architecture of advanced behavioral analytics frameworks and personalized AI ecosystems for enterprise clients.</p>
+                <p>Natasha is a practicing multimedia artist, educator at Pasadena City College, TEDx speaker, and exhibiting artist at the 10th International Beijing Biennale 2025 and Venice Architecture Biennale 2018.</p>
+            </div>
+
+            <div class="card-tags">
+                <span class="tag">AI Strategy</span>
+                <span class="tag">Affective Computing</span>
+                <span class="tag">Spatial Analytics</span>
+                <span class="tag">Computational Design</span>
+                <span class="tag">AR / VR / XR</span>
+                <span class="tag">Digital Twin</span>
+                <span class="tag">Biometric Sensing</span>
+                <span class="tag">Generative Systems</span>
+            </div>
+
+            <div class="card-creds">
+                <p class="creds-title">Selected Credentials</p>
+                <div class="cred-row"><span class="cred-dot"></span><span class="cred-text">M.Arch · Southern California Institute of Architecture (SCI-Arc) — Specialization: Algorithmic Design</span></div>
+                <div class="cred-row"><span class="cred-dot"></span><span class="cred-text">M.CS candidate · University of Southern California (USC) — Affective Computing / Emotion AI</span></div>
+                <div class="cred-row"><span class="cred-dot"></span><span class="cred-text">Executive Education · Harvard Business School &amp; Harvard Graduate School of Design — Real Estate</span></div>
+                <div class="cred-row"><span class="cred-dot"></span><span class="cred-text">Radical Innovation in Hospitality Award (2014) · European Hotel Design Award (2013)</span></div>
+                <div class="cred-row"><span class="cred-dot"></span><span class="cred-text">10th International Beijing Biennale 2025 · Venice Architecture Biennale 2018, Hong Kong Pavilion</span></div>
+            </div>
+
+            <div class="card-actions">
+                <a href="https://www.linkedin.com/in/natasha-bajc/" target="_blank" rel="noopener" class="btn btn-primary">
+                    LinkedIn
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                </a>
+                <a href="#" class="btn btn-outline email-btn" id="natasha-email-btn" aria-label="Email Natasha Bajc">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    Get in Touch
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MUDASSAR SHAIKH -->
+    <div class="person-card reveal">
+        <div class="card-photo">
+            <!-- Upload his photo to the repo as: mudassar-shaikh.jpg -->
+            <img
+                src="mudassar-shaikh.jpg"
+                alt="Mudassar Shaikh — Co-Founder, Nexus Hestia Technology"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            >
+            <div class="photo-placeholder" style="display:none;">
+                <div class="ph-icon">
+                    <svg width="38" height="38" fill="none" viewBox="0 0 24 24" stroke-width="1">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.118a7.5 7.5 0 0115 0"/>
+                    </svg>
+                </div>
+                <p class="ph-text">Add mudassar-shaikh.jpg<br>to repo root</p>
+            </div>
+        </div>
+        <div class="card-content">
+            <div>
+                <p class="card-role">Co-Founder · Technology Lead</p>
+                <h2 class="card-name">Mudassar Shaikh</h2>
+                <p class="card-title">AI Engineer · Data Systems Architect</p>
+            </div>
+
+            <!-- Remove this note once bio is finalized -->
+            <p class="edit-note">⚠ Placeholder — update with Mudassar's full bio &amp; credentials</p>
+
+            <div class="card-bio">
+                <p>Mudassar is an AI engineer and data systems specialist with deep expertise in building intelligent infrastructure for enterprise environments. His work spans the full stack of modern AI development — from data architecture and pipeline engineering through to the deployment of advanced machine learning systems that drive real-world decision-making at scale.</p>
+                <p>At Nexus Hestia, Mudassar leads the technical development of the company's core intelligence platforms, architecting the systems that transform raw organizational data into bespoke AI engines. His engineering background ensures every solution is operationally robust, scalable, and built to last.</p>
+            </div>
+
+            <div class="card-tags">
+                <span class="tag">AI Engineering</span>
+                <span class="tag">Data Architecture</span>
+                <span class="tag">Machine Learning</span>
+                <span class="tag">Enterprise AI</span>
+                <span class="tag">Data Pipelines</span>
+                <span class="tag">Systems Design</span>
+            </div>
+
+            <div class="card-creds">
+                <p class="creds-title">Selected Credentials</p>
+                <div class="cred-row"><span class="cred-dot"></span><span class="cred-text">AI Engineer, Advanced Technology Group · Sony Pictures Entertainment, Culver City</span></div>
+                <!-- TODO: Add education, awards, prior roles -->
+            </div>
+
+            <div class="card-actions">
+                <a href="https://www.linkedin.com/in/mudassarshaikh/" target="_blank" rel="noopener" class="btn btn-primary">
+                    LinkedIn
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- BOTTOM CTA -->
+<section class="bottom-cta reveal">
+    <div class="cta-inner">
+        <p class="cta-text">Ready to build intelligence<br>that is uniquely <span>yours?</span></p>
+        <a href="index.html#contact" class="btn-big">
+            Start the Conversation
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <a href="index.html" class="f-logo">NEXUS <span>HESTIA</span></a>
+        <ul class="f-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+            <li><a href="solution.html">Solutions</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+        <p class="f-copy">© 2024–2025 Nexus Hestia Technology</p>
+    </div>
+</footer>
+
+<script>
+    // Mobile nav
+    const burger = document.getElementById('hamburger');
+    const links  = document.getElementById('navLinks');
+    burger.addEventListener('click', () => links.classList.toggle('open'));
+
+    // Scroll reveal
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                obs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Navbar shadow
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        nav.style.boxShadow = window.scrollY > 20 ? '0 4px 40px rgba(0,0,0,0.6)' : 'none';
+    });
+
+    // Email obfuscation — assembled at runtime so scrapers can't harvest it
+    const _u = 'natasha.bajc';
+    const _d = 'nexushestia.com';
+    const emailBtn = document.getElementById('natasha-email-btn');
+    if (emailBtn) {
+        emailBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'mailto:' + _u + '@' + _d;
+        });
+        emailBtn.setAttribute('title', _u + '@' + _d);
+    }
+</script>
+
+</body>
+</html>
